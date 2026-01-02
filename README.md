@@ -1,73 +1,125 @@
-# Welcome to your Lovable project
+# 🏥 MedCare - Виклик медсестри додому
 
-## Project info
+Веб-застосунок для замовлення медичних послуг вдома у Тернопільській області.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## 🚀 Швидкий старт
 
-## How can I edit this code?
+### Вимоги
+- Node.js 18+
+- npm або bun
 
-There are several ways of editing your application.
+### Встановлення
 
-**Use Lovable**
+```bash
+# Клонування репозиторію
+git clone <repository-url>
+cd medcare
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+# Встановлення залежностей
+npm install
 
-Changes made via Lovable will be committed automatically to this repo.
+# Копіювання змінних середовища
+cp .env.example .env
 
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Запуск dev-сервера
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Застосунок буде доступний на `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Команди
 
-**Use GitHub Codespaces**
+| Команда | Опис |
+|---------|------|
+| `npm run dev` | Запуск dev-сервера з hot-reload |
+| `npm run build` | Збірка для production |
+| `npm run preview` | Перегляд production-збірки |
+| `npm run lint` | Перевірка коду ESLint |
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 🏗️ Архітектура
 
-## What technologies are used for this project?
+### Технології
+- **Frontend:** React 18, TypeScript, Vite
+- **Стилі:** Tailwind CSS, shadcn/ui
+- **Backend:** Lovable Cloud (Supabase)
+- **Стейт:** TanStack Query
+- **Роутинг:** React Router v6
 
-This project is built with:
+### Структура проекту
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+```
+src/
+├── components/          # UI компоненти
+│   ├── ui/             # shadcn/ui базові компоненти
+│   ├── Header.tsx      # Шапка сайту
+│   ├── Footer.tsx      # Футер
+│   └── ...
+├── pages/              # Сторінки
+│   ├── Index.tsx       # Головна
+│   ├── Order.tsx       # Оформлення замовлення
+│   ├── Orders.tsx      # Історія замовлень
+│   ├── MedicalCard.tsx # Медична картка
+│   ├── Auth.tsx        # Авторизація
+│   └── Admin.tsx       # Адмін-панель
+├── hooks/              # Кастомні хуки
+├── integrations/       # Інтеграції (Supabase)
+├── lib/               # Утиліти
+└── App.tsx            # Головний компонент
+```
 
-## How can I deploy this project?
+### База даних
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+```
+profiles          - Профілі користувачів
+user_roles        - Ролі (admin, nurse, patient)
+nurses            - Дані медсестер
+services          - Каталог послуг
+orders            - Замовлення
+order_items       - Позиції замовлень
+patient_medical_records - Медичні картки
+reviews           - Відгуки
+audit_logs        - Аудит дій
+```
 
-## Can I connect a custom domain to my Lovable project?
+## 🔐 Ролі користувачів
 
-Yes, you can!
+| Роль | Права |
+|------|-------|
+| `patient` | Замовлення послуг, перегляд історії, медкартка |
+| `nurse` | Перегляд призначених замовлень, оновлення статусу |
+| `admin` | Повний доступ, управління користувачами |
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 📝 API Endpoints
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Автентифікація
+- `POST /auth/v1/signup` - Реєстрація
+- `POST /auth/v1/token?grant_type=password` - Логін
+- `POST /auth/v1/logout` - Вихід
+
+### Замовлення
+- `GET /rest/v1/orders` - Список замовлень
+- `POST /rest/v1/orders` - Створення замовлення
+- `PATCH /rest/v1/orders?id=eq.{id}` - Оновлення статусу
+
+### Медкартка
+- `GET /rest/v1/patient_medical_records` - Отримання
+- `POST /rest/v1/patient_medical_records` - Створення
+
+## 🧪 Тестування
+
+Див. [docs/TEST_CASES.md](docs/TEST_CASES.md) для списку тест-кейсів.
+
+## 📋 MVP Задачі
+
+Див. [docs/MVP_TASKS.md](docs/MVP_TASKS.md) для повного списку задач.
+
+## 🤝 Контрибуція
+
+1. Створіть feature branch (`git checkout -b feature/amazing-feature`)
+2. Закомітьте зміни (`git commit -m 'Add amazing feature'`)
+3. Запуште branch (`git push origin feature/amazing-feature`)
+4. Відкрийте Pull Request
+
+## 📄 Ліцензія
+
+MIT License - див. [LICENSE](LICENSE) для деталей.
