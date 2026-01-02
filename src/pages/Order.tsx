@@ -53,7 +53,7 @@ const Order = () => {
   return <div className="min-h-screen flex flex-col">
       <Header />
       
-      <main className="flex-1 pt-24 pb-16">
+      <main className="flex-1 pt-24 pb-24">
         <div className="container mx-auto px-4 max-w-4xl">
           {/* Progress Steps */}
           <div className="flex items-center justify-center gap-4 mb-12">
