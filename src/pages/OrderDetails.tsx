@@ -316,8 +316,8 @@ const OrderDetails = () => {
             )}
           </div>
 
-          {/* Feedback Section - Only for completed orders */}
-          {order.status === "completed" && (
+          {/* Feedback Section */}
+          <div className="bg-card rounded-2xl p-6 md:p-8 shadow-soft">
             <div className="bg-card rounded-2xl p-6 md:p-8 shadow-soft">
               <h2 className="text-lg font-semibold text-foreground mb-4">Зворотний зв'язок</h2>
 
@@ -500,7 +500,7 @@ const OrderDetails = () => {
                 </div>
               )}
             </div>
-          )}
+          </div>
         </div>
       </main>
 
