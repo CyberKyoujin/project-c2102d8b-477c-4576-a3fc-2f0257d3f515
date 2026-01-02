@@ -202,8 +202,8 @@ const Profile = () => {
                             </div>
                           </div>
 
-                          <div className="flex items-center justify-between md:justify-end gap-4">
-                            <div className="flex flex-col items-start md:items-end gap-2">
+                          <div className="flex items-center justify-between w-full md:w-auto md:justify-end gap-4">
+                            <div className="flex flex-row md:flex-col items-center md:items-end justify-between w-full md:w-auto gap-2">
                               <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium ${status.color}`}>
                                 <StatusIcon className="w-4 h-4" />
                                 {status.label}
