@@ -44,9 +44,7 @@ const Services = () => {
     <section className="py-12 md:py-16 bg-muted/30">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">
-            Наші послуги
-          </h2>
+          <h2 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-4">Наші послуги</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Повний спектр медсестринських послуг у зручний для вас час
           </p>
@@ -62,15 +60,9 @@ const Services = () => {
               <div className="w-14 h-14 rounded-xl gradient-hero flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300">
                 <service.icon className="w-7 h-7 text-primary-foreground" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground mb-2">
-                {service.title}
-              </h3>
-              <p className="text-muted-foreground mb-4">
-                {service.description}
-              </p>
-              <p className="text-lg font-semibold text-primary">
-                {service.price}
-              </p>
+              <h3 className="text-xl font-semibold text-foreground mb-2">{service.title}</h3>
+              <p className="text-muted-foreground mb-4">{service.description}</p>
+              <p className="text-lg font-semibold text-primary">{service.price}</p>
             </div>
           ))}
         </div>
