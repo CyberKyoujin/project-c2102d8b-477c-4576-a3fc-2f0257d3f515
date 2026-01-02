@@ -20,8 +20,8 @@ const Header = () => {
             </span>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* Desktop Navigation - hidden on tablet and mobile */}
+          <nav className="hidden lg:flex items-center gap-8">
             <Link to="/" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Головна
             </Link>
@@ -33,9 +33,9 @@ const Header = () => {
             </Link>
           </nav>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-3">
-            <a href="tel:+380800123456" className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+          {/* Desktop CTA - phone hidden on tablet, buttons hidden on mobile */}
+          <div className="hidden sm:flex items-center gap-3">
+            <a href="tel:+380800123456" className="hidden lg:flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
               <Phone className="w-4 h-4" />
               <span className="font-medium">0 800 123 456</span>
             </a>
@@ -51,18 +51,18 @@ const Header = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Button */}
+          {/* Hamburger Menu Button - visible on tablet (for nav/phone) and mobile (for everything) */}
           <button
-            className="md:hidden p-2 text-foreground"
+            className="lg:hidden p-2 text-foreground"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
           >
             {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
         </div>
 
-        {/* Mobile Menu */}
+        {/* Mobile/Tablet Menu */}
         {isMenuOpen && (
-          <div className="md:hidden py-4 border-t border-border animate-fade-in">
+          <div className="lg:hidden py-4 border-t border-border animate-fade-in">
             <nav className="flex flex-col gap-4">
               <Link
                 to="/"
@@ -90,16 +90,19 @@ const Header = () => {
                   <Phone className="w-4 h-4" />
                   <span className="font-medium">0 800 123 456</span>
                 </a>
-                <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="outline" className="w-full">
-                    Увійти
-                  </Button>
-                </Link>
-                <Link to="/order" onClick={() => setIsMenuOpen(false)}>
-                  <Button variant="hero" className="w-full">
-                    Замовити виклик
-                  </Button>
-                </Link>
+                {/* Auth buttons only in mobile menu (hidden on tablet since they're visible in header) */}
+                <div className="sm:hidden flex flex-col gap-3">
+                  <Link to="/auth" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="outline" className="w-full">
+                      Увійти
+                    </Button>
+                  </Link>
+                  <Link to="/order" onClick={() => setIsMenuOpen(false)}>
+                    <Button variant="hero" className="w-full">
+                      Замовити виклик
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </nav>
           </div>
