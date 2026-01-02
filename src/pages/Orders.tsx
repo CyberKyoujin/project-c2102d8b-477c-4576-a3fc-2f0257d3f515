@@ -7,39 +7,6 @@ import {
   Syringe, Droplets, Plus
 } from "lucide-react";
 
-// Mock data for demonstration
-const orders = [
-  {
-    id: "1",
-    date: "2026-01-03",
-    time: "14:00",
-    services: ["Ін'єкції", "Вимірювання показників"],
-    address: "м. Тернопіль, вул. Шевченка, 10",
-    status: "pending",
-    price: 250,
-  },
-  {
-    id: "2",
-    date: "2025-12-28",
-    time: "10:00",
-    services: ["Крапельниці"],
-    address: "м. Тернопіль, вул. Грушевського, 5",
-    status: "completed",
-    price: 350,
-    nurse: "Оксана Ковальчук",
-  },
-  {
-    id: "3",
-    date: "2025-12-20",
-    time: "16:30",
-    services: ["Перев'язки"],
-    address: "м. Тернопіль, вул. Шевченка, 10",
-    status: "completed",
-    price: 200,
-    nurse: "Марія Іванова",
-  },
-];
-
 const statusConfig = {
   pending: {
     label: "Очікує підтвердження",
@@ -64,6 +31,18 @@ const statusConfig = {
 };
 
 const Orders = () => {
+  // TODO: Fetch orders from backend
+  const orders: Array<{
+    id: string;
+    date: string;
+    time: string;
+    services: string[];
+    address: string;
+    status: keyof typeof statusConfig;
+    price: number;
+    nurse?: string;
+  }> = [];
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -107,7 +86,7 @@ const Orders = () => {
           ) : (
             <div className="space-y-4">
               {orders.map((order) => {
-                const status = statusConfig[order.status as keyof typeof statusConfig];
+                const status = statusConfig[order.status];
                 const StatusIcon = status.icon;
 
                 return (

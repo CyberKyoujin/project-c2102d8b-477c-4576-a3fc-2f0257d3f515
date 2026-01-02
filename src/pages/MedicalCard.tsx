@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -11,37 +10,9 @@ import {
 } from "lucide-react";
 
 const MedicalCard = () => {
-  const [allergies, setAllergies] = useState<string[]>(["Пеніцилін"]);
-  const [medications, setMedications] = useState<string[]>(["Аспірин 100мг"]);
-  const [newAllergy, setNewAllergy] = useState("");
-  const [newMedication, setNewMedication] = useState("");
-
-  const [formData, setFormData] = useState({
-    bloodType: "A+",
-    chronicConditions: "Гіпертонія",
-    emergencyContact: "+380 67 123 4567",
-    emergencyName: "Марія Петренко (дружина)",
-    notes: "",
-  });
-
-  const addAllergy = () => {
-    if (newAllergy.trim()) {
-      setAllergies([...allergies, newAllergy.trim()]);
-      setNewAllergy("");
-    }
-  };
-
-  const addMedication = () => {
-    if (newMedication.trim()) {
-      setMedications([...medications, newMedication.trim()]);
-      setNewMedication("");
-    }
-  };
-
-  const handleSave = () => {
-    // TODO: Save to backend
-    console.log("Saving medical card:", { ...formData, allergies, medications });
-  };
+  // Placeholder data for UI display
+  const allergies = ["Пеніцилін"];
+  const medications = ["Аспірин 100мг"];
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -58,7 +29,7 @@ const MedicalCard = () => {
                 Інформація для швидкої та безпечної допомоги
               </p>
             </div>
-            <Button variant="hero" onClick={handleSave}>
+            <Button variant="hero">
               <Save className="w-4 h-4" />
               Зберегти
             </Button>
@@ -83,8 +54,6 @@ const MedicalCard = () => {
                       id="bloodType"
                       placeholder="A+, B-, O+ тощо"
                       className="pl-10 h-12"
-                      value={formData.bloodType}
-                      onChange={(e) => setFormData({ ...formData, bloodType: e.target.value })}
                     />
                   </div>
                 </div>
@@ -95,8 +64,6 @@ const MedicalCard = () => {
                     id="chronicConditions"
                     placeholder="Діабет, гіпертонія, астма..."
                     rows={3}
-                    value={formData.chronicConditions}
-                    onChange={(e) => setFormData({ ...formData, chronicConditions: e.target.value })}
                   />
                 </div>
               </div>
@@ -118,8 +85,6 @@ const MedicalCard = () => {
                     id="emergencyName"
                     placeholder="Ім'я та хто це (родич, друг)"
                     className="h-12"
-                    value={formData.emergencyName}
-                    onChange={(e) => setFormData({ ...formData, emergencyName: e.target.value })}
                   />
                 </div>
 
@@ -132,8 +97,6 @@ const MedicalCard = () => {
                       type="tel"
                       placeholder="+380 XX XXX XX XX"
                       className="pl-10 h-12"
-                      value={formData.emergencyContact}
-                      onChange={(e) => setFormData({ ...formData, emergencyContact: e.target.value })}
                     />
                   </div>
                 </div>
@@ -158,7 +121,6 @@ const MedicalCard = () => {
                     {allergy}
                     <button
                       type="button"
-                      onClick={() => setAllergies(allergies.filter((a) => a !== allergy))}
                       className="hover:bg-warning/20 rounded-full p-0.5"
                     >
                       <X className="w-3 h-3" />
@@ -170,12 +132,9 @@ const MedicalCard = () => {
               <div className="flex gap-2">
                 <Input
                   placeholder="Додати алергію..."
-                  value={newAllergy}
-                  onChange={(e) => setNewAllergy(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addAllergy())}
                   className="h-10"
                 />
-                <Button type="button" variant="outline" size="icon" onClick={addAllergy}>
+                <Button type="button" variant="outline" size="icon">
                   <Plus className="w-4 h-4" />
                 </Button>
               </div>
@@ -199,7 +158,6 @@ const MedicalCard = () => {
                     {med}
                     <button
                       type="button"
-                      onClick={() => setMedications(medications.filter((m) => m !== med))}
                       className="hover:bg-secondary/20 rounded-full p-0.5"
                     >
                       <X className="w-3 h-3" />
@@ -211,12 +169,9 @@ const MedicalCard = () => {
               <div className="flex gap-2">
                 <Input
                   placeholder="Додати ліки..."
-                  value={newMedication}
-                  onChange={(e) => setNewMedication(e.target.value)}
-                  onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), addMedication())}
                   className="h-10"
                 />
-                <Button type="button" variant="outline" size="icon" onClick={addMedication}>
+                <Button type="button" variant="outline" size="icon">
                   <Plus className="w-4 h-4" />
                 </Button>
               </div>
@@ -234,8 +189,6 @@ const MedicalCard = () => {
               <Textarea
                 placeholder="Будь-яка важлива інформація для медичного персоналу: страхи, особливі потреби, попередні операції..."
                 rows={4}
-                value={formData.notes}
-                onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
               />
             </div>
           </div>

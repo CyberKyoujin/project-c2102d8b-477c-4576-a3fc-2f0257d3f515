@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -6,57 +5,6 @@ import {
   Search, Clock, CheckCircle, Loader2, AlertTriangle,
   MapPin, Phone, User, Calendar, Filter
 } from "lucide-react";
-
-// Mock data
-const mockOrders = [
-  {
-    id: "1",
-    patient: "Іван Петренко",
-    phone: "+380 67 123 4567",
-    services: ["Ін'єкції", "Вимірювання показників"],
-    address: "м. Тернопіль, вул. Шевченка, 10",
-    date: "2026-01-03",
-    time: "14:00",
-    status: "pending",
-    price: 250,
-  },
-  {
-    id: "2",
-    patient: "Марія Ковальчук",
-    phone: "+380 50 987 6543",
-    services: ["Крапельниці"],
-    address: "м. Тернопіль, вул. Грушевського, 5",
-    date: "2026-01-03",
-    time: "10:00",
-    status: "confirmed",
-    nurse: "Оксана К.",
-    price: 350,
-  },
-  {
-    id: "3",
-    patient: "Олег Сидоренко",
-    phone: "+380 63 555 1234",
-    services: ["Перев'язки", "Догляд"],
-    address: "смт Збараж, вул. Центральна, 15",
-    date: "2026-01-03",
-    time: "16:30",
-    status: "in_progress",
-    nurse: "Марія І.",
-    price: 700,
-  },
-  {
-    id: "4",
-    patient: "Анна Бондаренко",
-    phone: "+380 97 222 3344",
-    services: ["Ін'єкції"],
-    address: "м. Тернопіль, вул. Руська, 22",
-    date: "2026-01-02",
-    time: "09:00",
-    status: "completed",
-    nurse: "Оксана К.",
-    price: 150,
-  },
-];
 
 const statusConfig = {
   pending: {
@@ -82,23 +30,26 @@ const statusConfig = {
 };
 
 const Admin = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  // TODO: Fetch orders from backend
+  const orders: Array<{
+    id: string;
+    patient: string;
+    phone: string;
+    services: string[];
+    address: string;
+    date: string;
+    time: string;
+    status: keyof typeof statusConfig;
+    price: number;
+    nurse?: string;
+  }> = [];
 
-  const filteredOrders = mockOrders.filter((order) => {
-    const matchesSearch =
-      order.patient.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      order.phone.includes(searchQuery);
-    const matchesStatus = !statusFilter || order.status === statusFilter;
-    return matchesSearch && matchesStatus;
-  });
-
+  // Placeholder stats
   const stats = {
-    pending: mockOrders.filter((o) => o.status === "pending").length,
-    confirmed: mockOrders.filter((o) => o.status === "confirmed").length,
-    in_progress: mockOrders.filter((o) => o.status === "in_progress").length,
-    completed: mockOrders.filter((o) => o.status === "completed").length,
+    pending: 0,
+    confirmed: 0,
+    in_progress: 0,
+    completed: 0,
   };
 
   return (
@@ -124,10 +75,7 @@ const Admin = () => {
               return (
                 <button
                   key={key}
-                  onClick={() => setStatusFilter(statusFilter === key ? null : key)}
-                  className={`bg-card rounded-xl p-4 shadow-soft text-left transition-all hover:shadow-card ${
-                    statusFilter === key ? "ring-2 ring-primary" : ""
-                  }`}
+                  className="bg-card rounded-xl p-4 shadow-soft text-left transition-all hover:shadow-card"
                 >
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${config.color}`}>
@@ -150,16 +98,12 @@ const Admin = () => {
               <Input
                 placeholder="Пошук за ім'ям, адресою або телефоном..."
                 className="pl-10 h-12"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            {statusFilter && (
-              <Button variant="outline" onClick={() => setStatusFilter(null)}>
-                <Filter className="w-4 h-4" />
-                Скинути фільтр
-              </Button>
-            )}
+            <Button variant="outline">
+              <Filter className="w-4 h-4" />
+              Фільтри
+            </Button>
           </div>
 
           {/* Orders Table */}
@@ -177,8 +121,8 @@ const Admin = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {filteredOrders.map((order) => {
-                    const status = statusConfig[order.status as keyof typeof statusConfig];
+                  {orders.map((order) => {
+                    const status = statusConfig[order.status];
                     const StatusIcon = status.icon;
 
                     return (
@@ -249,7 +193,7 @@ const Admin = () => {
               </table>
             </div>
 
-            {filteredOrders.length === 0 && (
+            {orders.length === 0 && (
               <div className="text-center py-12">
                 <AlertTriangle className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
                 <p className="text-muted-foreground">Замовлень не знайдено</p>
