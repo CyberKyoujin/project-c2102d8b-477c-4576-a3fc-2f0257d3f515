@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { 
   Syringe, Droplets, Bandage, Heart, Baby, Pill, 
-  MapPin, Calendar, Clock, CheckCircle 
+  MapPin, Calendar, Clock, CheckCircle, Banknote, CreditCard 
 } from "lucide-react";
 
 const services = [
@@ -23,6 +24,7 @@ const services = [
 const Order = () => {
   const [step, setStep] = useState(1);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
+  const [paymentMethod, setPaymentMethod] = useState<string>("cash");
 
   const toggleService = (serviceId: string) => {
     setSelectedServices((prev) =>
@@ -190,6 +192,60 @@ const Order = () => {
                       />
                     </div>
                   </div>
+                </div>
+
+                {/* Payment Method */}
+                <div className="space-y-3">
+                  <Label>Спосіб оплати</Label>
+                  <RadioGroup
+                    value={paymentMethod}
+                    onValueChange={setPaymentMethod}
+                    className="grid sm:grid-cols-2 gap-4"
+                  >
+                    <label
+                      htmlFor="cash"
+                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                        paymentMethod === "cash"
+                          ? "border-primary bg-primary/5"
+                          : "border-border bg-background hover:border-primary/50"
+                      }`}
+                    >
+                      <RadioGroupItem value="cash" id="cash" />
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                        paymentMethod === "cash" ? "gradient-hero" : "bg-muted"
+                      }`}>
+                        <Banknote className={`w-5 h-5 ${
+                          paymentMethod === "cash" ? "text-primary-foreground" : "text-muted-foreground"
+                        }`} />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Готівкою</p>
+                        <p className="text-sm text-muted-foreground">Оплата при візиті</p>
+                      </div>
+                    </label>
+
+                    <label
+                      htmlFor="transfer"
+                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
+                        paymentMethod === "transfer"
+                          ? "border-primary bg-primary/5"
+                          : "border-border bg-background hover:border-primary/50"
+                      }`}
+                    >
+                      <RadioGroupItem value="transfer" id="transfer" />
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                        paymentMethod === "transfer" ? "gradient-hero" : "bg-muted"
+                      }`}>
+                        <CreditCard className={`w-5 h-5 ${
+                          paymentMethod === "transfer" ? "text-primary-foreground" : "text-muted-foreground"
+                        }`} />
+                      </div>
+                      <div>
+                        <p className="font-medium text-foreground">Переказом</p>
+                        <p className="text-sm text-muted-foreground">На картку після візиту</p>
+                      </div>
+                    </label>
+                  </RadioGroup>
                 </div>
 
                 <div className="space-y-2">
