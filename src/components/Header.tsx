@@ -33,31 +33,34 @@ const Header = () => {
             </Link>
           </nav>
 
-          {/* Desktop CTA - phone hidden on tablet, buttons hidden on mobile */}
-          <div className="hidden sm:flex items-center gap-3">
-            <a href="tel:+380800123456" className="hidden lg:flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-              <Phone className="w-4 h-4" />
-              <span className="font-medium">0 800 123 456</span>
-            </a>
-            <Link to="/auth">
-              <Button variant="outline" size="sm">
-                Увійти
-              </Button>
-            </Link>
-            <Link to="/order">
-              <Button variant="hero" size="sm">
-                Замовити
-              </Button>
-            </Link>
-          </div>
+          {/* Right side: CTA buttons + hamburger grouped together */}
+          <div className="flex items-center gap-3">
+            {/* Desktop CTA - phone hidden on tablet, buttons hidden on mobile */}
+            <div className="hidden sm:flex items-center gap-3">
+              <a href="tel:+380800123456" className="hidden lg:flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                <Phone className="w-4 h-4" />
+                <span className="font-medium">0 800 123 456</span>
+              </a>
+              <Link to="/auth">
+                <Button variant="outline" size="sm">
+                  Увійти
+                </Button>
+              </Link>
+              <Link to="/order">
+                <Button variant="hero" size="sm">
+                  Замовити
+                </Button>
+              </Link>
+            </div>
 
-          {/* Hamburger Menu Button - visible on tablet (for nav/phone) and mobile (for everything) */}
-          <button
-            className="lg:hidden p-2 text-foreground"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            {/* Hamburger Menu Button - visible on tablet (for nav/phone) and mobile (for everything) */}
+            <button
+              className="lg:hidden p-2 text-foreground"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
 
         {/* Mobile/Tablet Menu */}
