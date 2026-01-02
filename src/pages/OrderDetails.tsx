@@ -234,7 +234,7 @@ const OrderDetails = () => {
                   </span>
                 </div>
               </div>
-              <div className="text-right">
+              <div className="text-left md:text-right">
                 <p className="text-3xl font-bold text-foreground">{order.price} ₴</p>
               </div>
             </div>
