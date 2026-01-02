@@ -117,6 +117,17 @@ const Auth = () => {
               </div>
             </div>
 
+            {isLogin && (
+              <div className="text-right">
+                <Link 
+                  to="/forgot-password" 
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                >
+                  Забули пароль?
+                </Link>
+              </div>
+            )}
+
             <Button type="submit" variant="hero" size="lg" className="w-full">
               {isLogin ? "Увійти" : "Зареєструватися"}
             </Button>
