@@ -7,16 +7,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { 
   User, Mail, Phone, MapPin, Calendar, Edit2, Save,
   Heart, AlertTriangle, Pill, Droplets, Plus, X,
-  Clock, CheckCircle, Loader2, Syringe, Settings, LogOut, ChevronRight, FileText
+  Clock, CheckCircle, Loader2, Syringe, Settings, LogOut, ChevronRight
 } from "lucide-react";
 
 const statusConfig = {
@@ -57,7 +51,6 @@ type Order = {
 
 const Profile = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   
   // Placeholder data
   const allergies = ["Пеніцилін"];
@@ -182,10 +175,10 @@ const Profile = () => {
                     const StatusIcon = status.icon;
 
                     return (
-                      <button
+                      <Link
                         key={order.id}
-                        onClick={() => setSelectedOrder(order)}
-                        className="w-full text-left bg-card rounded-2xl p-6 shadow-soft hover:shadow-card transition-all hover:scale-[1.01] cursor-pointer"
+                        to={`/profile/order/${order.id}`}
+                        className="block w-full text-left bg-card rounded-2xl p-6 shadow-soft hover:shadow-card transition-all hover:scale-[1.01]"
                       >
                         <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                           <div className="flex-1">
@@ -228,126 +221,11 @@ const Profile = () => {
                             <ChevronRight className="w-5 h-5 text-muted-foreground hidden md:block" />
                           </div>
                         </div>
-                      </button>
+                      </Link>
                     );
                   })}
                 </div>
               )}
-
-              {/* Order Details Dialog */}
-              <Dialog open={!!selectedOrder} onOpenChange={() => setSelectedOrder(null)}>
-                <DialogContent className="max-w-lg">
-                  <DialogHeader>
-                    <DialogTitle className="flex items-center gap-2">
-                      <FileText className="w-5 h-5 text-primary" />
-                      Деталі замовлення #{selectedOrder?.id}
-                    </DialogTitle>
-                  </DialogHeader>
-
-                  {selectedOrder && (
-                    <div className="space-y-6">
-                      {/* Status */}
-                      <div className="flex items-center justify-between">
-                        <span className="text-muted-foreground">Статус</span>
-                        <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium ${statusConfig[selectedOrder.status].color}`}>
-                          {(() => {
-                            const StatusIcon = statusConfig[selectedOrder.status].icon;
-                            return <StatusIcon className="w-4 h-4" />;
-                          })()}
-                          {statusConfig[selectedOrder.status].label}
-                        </span>
-                      </div>
-
-                      {/* Services */}
-                      <div className="space-y-2">
-                        <span className="text-muted-foreground text-sm">Послуги</span>
-                        <div className="flex flex-wrap gap-2">
-                          {selectedOrder.services.map((service) => (
-                            <span
-                              key={service}
-                              className="px-3 py-1.5 bg-primary/10 text-primary rounded-full text-sm font-medium"
-                            >
-                              {service}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Date & Time */}
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-1">
-                          <span className="text-muted-foreground text-sm">Дата</span>
-                          <p className="font-medium text-foreground flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-primary" />
-                            {selectedOrder.date}
-                          </p>
-                        </div>
-                        <div className="space-y-1">
-                          <span className="text-muted-foreground text-sm">Час</span>
-                          <p className="font-medium text-foreground flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-primary" />
-                            {selectedOrder.time}
-                          </p>
-                        </div>
-                      </div>
-
-                      {/* Address */}
-                      <div className="space-y-1">
-                        <span className="text-muted-foreground text-sm">Адреса</span>
-                        <p className="font-medium text-foreground flex items-center gap-2">
-                          <MapPin className="w-4 h-4 text-primary" />
-                          {selectedOrder.address}
-                        </p>
-                      </div>
-
-                      {/* Nurse */}
-                      {selectedOrder.nurse && (
-                        <div className="space-y-1">
-                          <span className="text-muted-foreground text-sm">Медсестра</span>
-                          <p className="font-medium text-foreground flex items-center gap-2">
-                            <User className="w-4 h-4 text-primary" />
-                            {selectedOrder.nurse}
-                          </p>
-                          {selectedOrder.phone && (
-                            <p className="text-sm text-muted-foreground flex items-center gap-2 ml-6">
-                              <Phone className="w-3 h-3" />
-                              {selectedOrder.phone}
-                            </p>
-                          )}
-                        </div>
-                      )}
-
-                      {/* Notes */}
-                      {selectedOrder.notes && (
-                        <div className="space-y-1">
-                          <span className="text-muted-foreground text-sm">Примітки</span>
-                          <p className="text-foreground bg-muted/50 p-3 rounded-lg text-sm">
-                            {selectedOrder.notes}
-                          </p>
-                        </div>
-                      )}
-
-                      {/* Price */}
-                      <div className="pt-4 border-t border-border flex items-center justify-between">
-                        <span className="text-muted-foreground">Вартість</span>
-                        <span className="text-2xl font-bold text-foreground">{selectedOrder.price} ₴</span>
-                      </div>
-
-                      {/* Actions */}
-                      {selectedOrder.status !== "completed" && (
-                        <div className="flex gap-3">
-                          <Button variant="outline" className="flex-1">
-                            Скасувати
-                          </Button>
-                          <Button variant="hero" className="flex-1">
-                            Зв'язатися
-                          </Button>
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </DialogContent>
-              </Dialog>
             </TabsContent>
 
             {/* Medical Card Tab */}
