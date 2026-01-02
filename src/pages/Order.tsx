@@ -7,67 +7,66 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { 
-  Syringe, Droplets, Bandage, Heart, Baby, Pill, 
-  MapPin, Calendar, Clock, CheckCircle, Banknote, CreditCard 
-} from "lucide-react";
-
-const services = [
-  { id: "injection", icon: Syringe, title: "Ін'єкції", price: 150 },
-  { id: "drip", icon: Droplets, title: "Крапельниці", price: 300 },
-  { id: "bandage", icon: Bandage, title: "Перев'язки", price: 200 },
-  { id: "vitals", icon: Heart, title: "Вимірювання показників", price: 100 },
-  { id: "care", icon: Baby, title: "Догляд за хворими", price: 500 },
-  { id: "meds", icon: Pill, title: "Контроль ліків", price: 200 },
-];
-
+import { Syringe, Droplets, Bandage, Heart, Baby, Pill, MapPin, Calendar, Clock, CheckCircle, Banknote, CreditCard } from "lucide-react";
+const services = [{
+  id: "injection",
+  icon: Syringe,
+  title: "Ін'єкції",
+  price: 150
+}, {
+  id: "drip",
+  icon: Droplets,
+  title: "Крапельниці",
+  price: 300
+}, {
+  id: "bandage",
+  icon: Bandage,
+  title: "Перев'язки",
+  price: 200
+}, {
+  id: "vitals",
+  icon: Heart,
+  title: "Вимірювання показників",
+  price: 100
+}, {
+  id: "care",
+  icon: Baby,
+  title: "Догляд за хворими",
+  price: 500
+}, {
+  id: "meds",
+  icon: Pill,
+  title: "Контроль ліків",
+  price: 200
+}];
 const Order = () => {
   const [step, setStep] = useState(1);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
   const [paymentMethod, setPaymentMethod] = useState<string>("cash");
-
   const toggleService = (serviceId: string) => {
-    setSelectedServices((prev) =>
-      prev.includes(serviceId)
-        ? prev.filter((id) => id !== serviceId)
-        : [...prev, serviceId]
-    );
+    setSelectedServices(prev => prev.includes(serviceId) ? prev.filter(id => id !== serviceId) : [...prev, serviceId]);
   };
-
   const totalPrice = selectedServices.reduce((sum, id) => {
-    const service = services.find((s) => s.id === id);
+    const service = services.find(s => s.id === id);
     return sum + (service?.price || 0);
   }, 0);
-
-  return (
-    <div className="min-h-screen flex flex-col">
+  return <div className="min-h-screen flex flex-col">
       <Header />
       
       <main className="flex-1 pt-24 pb-16">
         <div className="container mx-auto px-4 max-w-4xl">
           {/* Progress Steps */}
           <div className="flex items-center justify-center gap-4 mb-12">
-            {[1, 2, 3].map((s) => (
-              <div key={s} className="flex items-center gap-2">
-                <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-colors ${
-                    step >= s
-                      ? "gradient-hero text-primary-foreground"
-                      : "bg-muted text-muted-foreground"
-                  }`}
-                >
+            {[1, 2, 3].map(s => <div key={s} className="flex items-center gap-2">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-colors ${step >= s ? "gradient-hero text-primary-foreground" : "bg-muted text-muted-foreground"}`}>
                   {step > s ? <CheckCircle className="w-5 h-5" /> : s}
                 </div>
-                {s < 3 && (
-                  <div className={`w-16 h-1 rounded ${step > s ? "gradient-hero" : "bg-muted"}`} />
-                )}
-              </div>
-            ))}
+                {s < 3 && <div className={`w-16 h-1 rounded ${step > s ? "gradient-hero" : "bg-muted"}`} />}
+              </div>)}
           </div>
 
           {/* Step 1: Select Services */}
-          {step === 1 && (
-            <div className="animate-fade-in">
+          {step === 1 && <div className="animate-fade-in">
               <h1 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-2 text-center">
                 Оберіть послуги
               </h1>
@@ -76,67 +75,35 @@ const Order = () => {
               </p>
 
               <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
-                {services.map((service) => (
-                  <button
-                    key={service.id}
-                    type="button"
-                    onClick={() => toggleService(service.id)}
-                    className={`p-5 rounded-xl border-2 text-left transition-all ${
-                      selectedServices.includes(service.id)
-                        ? "border-primary bg-primary/5 shadow-card"
-                        : "border-border bg-card hover:border-primary/50"
-                    }`}
-                  >
+                {services.map(service => <button key={service.id} type="button" onClick={() => toggleService(service.id)} className={`p-5 rounded-xl border-2 text-left transition-all ${selectedServices.includes(service.id) ? "border-primary bg-primary/5 shadow-card" : "border-border bg-card hover:border-primary/50"}`}>
                     <div className="flex items-start gap-4">
-                      <div
-                        className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                          selectedServices.includes(service.id)
-                            ? "gradient-hero"
-                            : "bg-muted"
-                        }`}
-                      >
-                        <service.icon
-                          className={`w-6 h-6 ${
-                            selectedServices.includes(service.id)
-                              ? "text-primary-foreground"
-                              : "text-muted-foreground"
-                          }`}
-                        />
+                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${selectedServices.includes(service.id) ? "gradient-hero" : "bg-muted"}`}>
+                        <service.icon className={`w-6 h-6 ${selectedServices.includes(service.id) ? "text-primary-foreground" : "text-muted-foreground"}`} />
                       </div>
                       <div className="flex-1">
                         <h3 className="font-semibold text-foreground">{service.title}</h3>
                         <p className="text-primary font-medium">від {service.price} ₴</p>
                       </div>
                     </div>
-                  </button>
-                ))}
+                  </button>)}
               </div>
 
-              {selectedServices.length > 0 && (
-                <div className="bg-muted/50 rounded-xl p-6 mb-8">
+              {selectedServices.length > 0 && <div className="bg-muted/50 rounded-xl p-6 mb-8">
                   <div className="flex justify-between items-center">
                     <span className="text-muted-foreground">Орієнтовна вартість:</span>
                     <span className="text-2xl font-bold text-foreground">від {totalPrice} ₴</span>
                   </div>
-                </div>
-              )}
+                </div>}
 
               <div className="flex justify-center">
-                <Button
-                  variant="hero"
-                  size="xl"
-                  disabled={selectedServices.length === 0}
-                  onClick={() => setStep(2)}
-                >
+                <Button variant="hero" size="xl" disabled={selectedServices.length === 0} onClick={() => setStep(2)}>
                   Продовжити
                 </Button>
               </div>
-            </div>
-          )}
+            </div>}
 
           {/* Step 2: Address & Time */}
-          {step === 2 && (
-            <div className="animate-fade-in">
+          {step === 2 && <div className="animate-fade-in">
               <h1 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-2 text-center">
                 Адреса та час
               </h1>
@@ -150,21 +117,13 @@ const Order = () => {
                     <Label htmlFor="city">Населений пункт</Label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                      <Input
-                        id="city"
-                        placeholder="Тернопіль"
-                        className="pl-10 h-12"
-                      />
+                      <Input id="city" placeholder="Тернопіль" className="pl-10 h-12" />
                     </div>
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="address">Адреса</Label>
-                    <Input
-                      id="address"
-                      placeholder="вул. Шевченка, 10, кв. 5"
-                      className="h-12"
-                    />
+                    <Input id="address" placeholder="вул. Шевченка, 10, кв. 5" className="h-12" />
                   </div>
                 </div>
 
@@ -173,11 +132,7 @@ const Order = () => {
                     <Label htmlFor="date">Бажана дата</Label>
                     <div className="relative">
                       <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                      <Input
-                        id="date"
-                        type="date"
-                        className="pl-10 h-12"
-                      />
+                      <Input id="date" type="date" className="pl-10 h-12" />
                     </div>
                   </div>
 
@@ -185,11 +140,7 @@ const Order = () => {
                     <Label htmlFor="time">Бажаний час</Label>
                     <div className="relative">
                       <Clock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                      <Input
-                        id="time"
-                        type="time"
-                        className="pl-10 h-12"
-                      />
+                      <Input id="time" type="time" className="pl-10 h-12" />
                     </div>
                   </div>
                 </div>
@@ -197,26 +148,11 @@ const Order = () => {
                 {/* Payment Method */}
                 <div className="space-y-3">
                   <Label>Спосіб оплати</Label>
-                  <RadioGroup
-                    value={paymentMethod}
-                    onValueChange={setPaymentMethod}
-                    className="grid sm:grid-cols-2 gap-4"
-                  >
-                    <label
-                      htmlFor="cash"
-                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                        paymentMethod === "cash"
-                          ? "border-primary bg-primary/5"
-                          : "border-border bg-background hover:border-primary/50"
-                      }`}
-                    >
+                  <RadioGroup value={paymentMethod} onValueChange={setPaymentMethod} className="grid sm:grid-cols-2 gap-4">
+                    <label htmlFor="cash" className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${paymentMethod === "cash" ? "border-primary bg-primary/5" : "border-border bg-background hover:border-primary/50"}`}>
                       <RadioGroupItem value="cash" id="cash" />
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        paymentMethod === "cash" ? "gradient-hero" : "bg-muted"
-                      }`}>
-                        <Banknote className={`w-5 h-5 ${
-                          paymentMethod === "cash" ? "text-primary-foreground" : "text-muted-foreground"
-                        }`} />
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${paymentMethod === "cash" ? "gradient-hero" : "bg-muted"}`}>
+                        <Banknote className={`w-5 h-5 ${paymentMethod === "cash" ? "text-primary-foreground" : "text-muted-foreground"}`} />
                       </div>
                       <div>
                         <p className="font-medium text-foreground">Готівкою</p>
@@ -224,24 +160,13 @@ const Order = () => {
                       </div>
                     </label>
 
-                    <label
-                      htmlFor="transfer"
-                      className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${
-                        paymentMethod === "transfer"
-                          ? "border-primary bg-primary/5"
-                          : "border-border bg-background hover:border-primary/50"
-                      }`}
-                    >
+                    <label htmlFor="transfer" className={`flex items-center gap-4 p-4 rounded-xl border-2 cursor-pointer transition-all ${paymentMethod === "transfer" ? "border-primary bg-primary/5" : "border-border bg-background hover:border-primary/50"}`}>
                       <RadioGroupItem value="transfer" id="transfer" />
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        paymentMethod === "transfer" ? "gradient-hero" : "bg-muted"
-                      }`}>
-                        <CreditCard className={`w-5 h-5 ${
-                          paymentMethod === "transfer" ? "text-primary-foreground" : "text-muted-foreground"
-                        }`} />
+                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${paymentMethod === "transfer" ? "gradient-hero" : "bg-muted"}`}>
+                        <CreditCard className={`w-5 h-5 ${paymentMethod === "transfer" ? "text-primary-foreground" : "text-muted-foreground"}`} />
                       </div>
                       <div>
-                        <p className="font-medium text-foreground">Переказом</p>
+                        <p className="font-medium text-foreground">Безготівковий</p>
                         <p className="text-sm text-muted-foreground">На картку після візиту</p>
                       </div>
                     </label>
@@ -250,11 +175,7 @@ const Order = () => {
 
                 <div className="space-y-2">
                   <Label htmlFor="notes">Додаткова інформація (необов'язково)</Label>
-                  <Textarea
-                    id="notes"
-                    placeholder="Опишіть симптоми, особливі потреби або як вас знайти..."
-                    rows={4}
-                  />
+                  <Textarea id="notes" placeholder="Опишіть симптоми, особливі потреби або як вас знайти..." rows={4} />
                 </div>
               </div>
 
@@ -266,12 +187,10 @@ const Order = () => {
                   Замовити виклик
                 </Button>
               </div>
-            </div>
-          )}
+            </div>}
 
           {/* Step 3: Success */}
-          {step === 3 && (
-            <div className="text-center animate-fade-in">
+          {step === 3 && <div className="text-center animate-fade-in">
               <div className="w-24 h-24 rounded-full gradient-hero flex items-center justify-center mx-auto mb-8">
                 <CheckCircle className="w-12 h-12 text-primary-foreground" />
               </div>
@@ -293,14 +212,11 @@ const Order = () => {
                   </Button>
                 </Link>
               </div>
-            </div>
-          )}
+            </div>}
         </div>
       </main>
 
       <Footer />
-    </div>
-  );
+    </div>;
 };
-
 export default Order;
