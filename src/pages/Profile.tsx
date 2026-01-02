@@ -50,7 +50,8 @@ type Order = {
 };
 
 const Profile = () => {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditingMedical, setIsEditingMedical] = useState(false);
+  const [isEditingPersonal, setIsEditingPersonal] = useState(false);
   
   // Placeholder data
   const allergies = ["Пеніцилін"];
@@ -226,8 +227,8 @@ const Profile = () => {
             <TabsContent value="medical" className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-foreground">Медична карта</h2>
-                <Button variant={isEditing ? "hero" : "outline"} size="sm" onClick={() => setIsEditing(!isEditing)}>
-                  {isEditing ? (
+                <Button variant={isEditingMedical ? "hero" : "outline"} size="sm" onClick={() => setIsEditingMedical(!isEditingMedical)}>
+                  {isEditingMedical ? (
                     <>
                       <Save className="w-4 h-4" />
                       Зберегти
@@ -260,7 +261,7 @@ const Profile = () => {
                           id="bloodType"
                           placeholder="A+, B-, O+ тощо"
                           className="pl-10 h-12"
-                          disabled={!isEditing}
+                        disabled={!isEditingMedical}
                         />
                       </div>
                     </div>
@@ -271,7 +272,7 @@ const Profile = () => {
                         id="chronicConditions"
                         placeholder="Діабет, гіпертонія, астма..."
                         rows={3}
-                        disabled={!isEditing}
+                        disabled={!isEditingMedical}
                       />
                     </div>
                   </div>
@@ -293,7 +294,7 @@ const Profile = () => {
                         id="emergencyName"
                         placeholder="Ім'я та хто це (родич, друг)"
                         className="h-12"
-                        disabled={!isEditing}
+                        disabled={!isEditingMedical}
                       />
                     </div>
 
@@ -306,7 +307,7 @@ const Profile = () => {
                           type="tel"
                           placeholder="+380 XX XXX XX XX"
                           className="pl-10 h-12"
-                          disabled={!isEditing}
+                        disabled={!isEditingMedical}
                         />
                       </div>
                     </div>
@@ -329,7 +330,7 @@ const Profile = () => {
                         className="inline-flex items-center gap-1 px-3 py-1.5 bg-warning/10 text-warning rounded-full text-sm font-medium"
                       >
                         {allergy}
-                        {isEditing && (
+                        {isEditingMedical && (
                           <button type="button" className="hover:bg-warning/20 rounded-full p-0.5">
                             <X className="w-3 h-3" />
                           </button>
@@ -338,7 +339,7 @@ const Profile = () => {
                     ))}
                   </div>
 
-                  {isEditing && (
+                  {isEditingMedical && (
                     <div className="flex gap-2">
                       <Input placeholder="Додати алергію..." className="h-10" />
                       <Button type="button" variant="outline" size="icon">
@@ -364,7 +365,7 @@ const Profile = () => {
                         className="inline-flex items-center gap-1 px-3 py-1.5 bg-secondary/10 text-secondary rounded-full text-sm font-medium"
                       >
                         {med}
-                        {isEditing && (
+                        {isEditingMedical && (
                           <button type="button" className="hover:bg-secondary/20 rounded-full p-0.5">
                             <X className="w-3 h-3" />
                           </button>
@@ -373,7 +374,7 @@ const Profile = () => {
                     ))}
                   </div>
 
-                  {isEditing && (
+                  {isEditingMedical && (
                     <div className="flex gap-2">
                       <Input placeholder="Додати ліки..." className="h-10" />
                       <Button type="button" variant="outline" size="icon">
@@ -395,7 +396,7 @@ const Profile = () => {
                   <Textarea
                     placeholder="Будь-яка важлива інформація для медичного персоналу..."
                     rows={4}
-                    disabled={!isEditing}
+                    disabled={!isEditingMedical}
                   />
                 </div>
               </div>
@@ -405,9 +406,18 @@ const Profile = () => {
             <TabsContent value="personal" className="space-y-6">
               <div className="flex items-center justify-between">
                 <h2 className="text-xl font-semibold text-foreground">Особисті дані</h2>
-                <Button variant="outline" size="sm">
-                  <Edit2 className="w-4 h-4" />
-                  Редагувати
+                <Button variant={isEditingPersonal ? "hero" : "outline"} size="sm" onClick={() => setIsEditingPersonal(!isEditingPersonal)}>
+                  {isEditingPersonal ? (
+                    <>
+                      <Save className="w-4 h-4" />
+                      Зберегти
+                    </>
+                  ) : (
+                    <>
+                      <Edit2 className="w-4 h-4" />
+                      Редагувати
+                    </>
+                  )}
                 </Button>
               </div>
 
@@ -415,19 +425,19 @@ const Profile = () => {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <Label htmlFor="firstName">Ім'я</Label>
-                    <Input id="firstName" placeholder="Ваше ім'я" className="h-12" disabled />
+                    <Input id="firstName" placeholder="Ваше ім'я" className="h-12" disabled={!isEditingPersonal} />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="lastName">Прізвище</Label>
-                    <Input id="lastName" placeholder="Ваше прізвище" className="h-12" disabled />
+                    <Input id="lastName" placeholder="Ваше прізвище" className="h-12" disabled={!isEditingPersonal} />
                   </div>
 
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <div className="relative">
                       <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                      <Input id="email" type="email" placeholder="email@example.com" className="pl-10 h-12" disabled />
+                      <Input id="email" type="email" placeholder="email@example.com" className="pl-10 h-12" disabled={!isEditingPersonal} />
                     </div>
                   </div>
 
@@ -435,7 +445,7 @@ const Profile = () => {
                     <Label htmlFor="phone">Телефон</Label>
                     <div className="relative">
                       <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                      <Input id="phone" type="tel" placeholder="+380 XX XXX XX XX" className="pl-10 h-12" disabled />
+                      <Input id="phone" type="tel" placeholder="+380 XX XXX XX XX" className="pl-10 h-12" disabled={!isEditingPersonal} />
                     </div>
                   </div>
 
@@ -443,7 +453,7 @@ const Profile = () => {
                     <Label htmlFor="address">Адреса за замовчуванням</Label>
                     <div className="relative">
                       <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                      <Input id="address" placeholder="Вулиця, будинок, квартира" className="pl-10 h-12" disabled />
+                      <Input id="address" placeholder="Вулиця, будинок, квартира" className="pl-10 h-12" disabled={!isEditingPersonal} />
                     </div>
                   </div>
 
@@ -451,7 +461,7 @@ const Profile = () => {
                     <Label htmlFor="birthDate">Дата народження</Label>
                     <div className="relative">
                       <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
-                      <Input id="birthDate" type="date" className="pl-10 h-12" disabled />
+                      <Input id="birthDate" type="date" className="pl-10 h-12" disabled={!isEditingPersonal} />
                     </div>
                   </div>
                 </div>
