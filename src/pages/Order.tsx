@@ -23,13 +23,6 @@ const services = [
 const Order = () => {
   const [step, setStep] = useState(1);
   const [selectedServices, setSelectedServices] = useState<string[]>([]);
-  const [formData, setFormData] = useState({
-    address: "",
-    city: "",
-    date: "",
-    time: "",
-    notes: "",
-  });
 
   const toggleService = (serviceId: string) => {
     setSelectedServices((prev) =>
@@ -43,12 +36,6 @@ const Order = () => {
     const service = services.find((s) => s.id === id);
     return sum + (service?.price || 0);
   }, 0);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Submit order to backend
-    setStep(3);
-  };
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -147,7 +134,7 @@ const Order = () => {
 
           {/* Step 2: Address & Time */}
           {step === 2 && (
-            <form onSubmit={handleSubmit} className="animate-fade-in">
+            <div className="animate-fade-in">
               <h1 className="text-3xl md:text-4xl font-serif font-bold text-foreground mb-2 text-center">
                 Адреса та час
               </h1>
@@ -165,9 +152,6 @@ const Order = () => {
                         id="city"
                         placeholder="Тернопіль"
                         className="pl-10 h-12"
-                        value={formData.city}
-                        onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                        required
                       />
                     </div>
                   </div>
@@ -178,9 +162,6 @@ const Order = () => {
                       id="address"
                       placeholder="вул. Шевченка, 10, кв. 5"
                       className="h-12"
-                      value={formData.address}
-                      onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                      required
                     />
                   </div>
                 </div>
@@ -194,9 +175,6 @@ const Order = () => {
                         id="date"
                         type="date"
                         className="pl-10 h-12"
-                        value={formData.date}
-                        onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                        required
                       />
                     </div>
                   </div>
@@ -209,9 +187,6 @@ const Order = () => {
                         id="time"
                         type="time"
                         className="pl-10 h-12"
-                        value={formData.time}
-                        onChange={(e) => setFormData({ ...formData, time: e.target.value })}
-                        required
                       />
                     </div>
                   </div>
@@ -223,8 +198,6 @@ const Order = () => {
                     id="notes"
                     placeholder="Опишіть симптоми, особливі потреби або як вас знайти..."
                     rows={4}
-                    value={formData.notes}
-                    onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
                   />
                 </div>
               </div>
@@ -233,11 +206,11 @@ const Order = () => {
                 <Button type="button" variant="outline" size="lg" onClick={() => setStep(1)}>
                   Назад
                 </Button>
-                <Button type="submit" variant="hero" size="lg">
+                <Button type="button" variant="hero" size="lg" onClick={() => setStep(3)}>
                   Замовити виклик
                 </Button>
               </div>
-            </form>
+            </div>
           )}
 
           {/* Step 3: Success */}
