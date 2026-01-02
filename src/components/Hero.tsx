@@ -13,7 +13,7 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <div className="space-y-8">
+          <div className="space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-secondary/10 rounded-full">
               <MapPin className="w-4 h-4 text-secondary" />
               <span className="text-sm font-medium text-secondary">
