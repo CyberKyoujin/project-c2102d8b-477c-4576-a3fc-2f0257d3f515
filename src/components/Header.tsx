@@ -28,8 +28,8 @@ const Header = () => {
             <Link to="/order" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Викликати медсестру
             </Link>
-            <Link to="/medical-card" className="text-muted-foreground hover:text-primary transition-colors font-medium">
-              Медкарта
+            <Link to="/profile" className="text-muted-foreground hover:text-primary transition-colors font-medium">
+              Профіль
             </Link>
           </nav>
 
@@ -79,11 +79,11 @@ const Header = () => {
                 Викликати медсестру
               </Link>
               <Link
-                to="/medical-card"
+                to="/profile"
                 className="text-foreground hover:text-primary transition-colors font-medium py-2"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Медкарта
+                Профіль
               </Link>
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
                 <a href="tel:+380800123456" className="flex items-center gap-2 text-muted-foreground">
