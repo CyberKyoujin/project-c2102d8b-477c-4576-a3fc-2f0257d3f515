@@ -146,7 +146,7 @@ const Profile = () => {
                 <Link to="/order">
                   <Button variant="hero" size="sm">
                     <Plus className="w-4 h-4" />
-                    Новий виклик
+                    <span className="hidden sm:inline">Новий виклик</span>
                   </Button>
                 </Link>
               </div>
