@@ -109,16 +109,10 @@ const Profile = () => {
                 </p>
               </div>
 
-              <div className="flex gap-2">
-                <Button variant="outline" size="sm">
-                  <Settings className="w-4 h-4" />
-                  Налаштування
-                </Button>
-                <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">
-                  <LogOut className="w-4 h-4" />
-                  Вийти
-                </Button>
-              </div>
+              <Button variant="ghost" size="sm" className="text-destructive hover:text-destructive">
+                <LogOut className="w-4 h-4" />
+                Вийти
+              </Button>
             </div>
           </div>
 
