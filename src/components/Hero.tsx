@@ -47,7 +47,7 @@ const Hero = () => {
             </div>
 
             {/* Trust Badges */}
-            <div className="flex flex-wrap gap-6 pt-4">
+            <div className="flex flex-wrap gap-6 pt-4 justify-center lg:justify-start">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
                   <Clock className="w-6 h-6 text-primary" />
