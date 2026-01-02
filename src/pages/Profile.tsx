@@ -90,20 +90,20 @@ const Profile = () => {
         <div className="container mx-auto px-4 max-w-5xl">
           {/* Profile Header */}
           <div className="bg-card rounded-2xl p-6 md:p-8 shadow-soft mb-6">
-            <div className="flex flex-col md:flex-row md:items-center gap-6">
+            <div className="flex flex-col items-center md:flex-row md:items-center gap-6">
               <div className="w-20 h-20 md:w-24 md:h-24 rounded-full gradient-hero flex items-center justify-center">
                 <User className="w-10 h-10 md:w-12 md:h-12 text-primary-foreground" />
               </div>
               
-              <div className="flex-1">
+              <div className="flex-1 text-center md:text-left">
                 <h1 className="text-2xl md:text-3xl font-serif font-bold text-foreground mb-1">
                   Користувач
                 </h1>
-                <p className="text-muted-foreground flex items-center gap-2">
+                <p className="text-muted-foreground flex items-center justify-center md:justify-start gap-2">
                   <Mail className="w-4 h-4" />
                   email@example.com
                 </p>
-                <p className="text-muted-foreground flex items-center gap-2 mt-1">
+                <p className="text-muted-foreground flex items-center justify-center md:justify-start gap-2 mt-1">
                   <Phone className="w-4 h-4" />
                   +380 XX XXX XX XX
                 </p>
