@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Phone, Heart } from "lucide-react";
+import { Menu, X, Phone, Heart, UserPlus } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,6 +30,12 @@ const Header = () => {
             </Link>
             <Link to="/profile" className="text-muted-foreground hover:text-primary transition-colors font-medium">
               Профіль
+            </Link>
+            <Link to="/nurse-application">
+              <Button variant="outline" size="sm" className="gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                <UserPlus className="w-4 h-4" />
+                Станьте частиною команди
+              </Button>
             </Link>
           </nav>
 
@@ -87,6 +93,15 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Профіль
+              </Link>
+              <Link
+                to="/nurse-application"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Button variant="outline" className="w-full gap-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                  <UserPlus className="w-4 h-4" />
+                  Станьте частиною команди
+                </Button>
               </Link>
               <div className="flex flex-col gap-3 pt-4 border-t border-border">
                 <a href="tel:+380800123456" className="flex items-center gap-2 text-muted-foreground">
