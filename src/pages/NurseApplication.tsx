@@ -68,59 +68,51 @@ const NurseApplication = () => {
     try {
       const { data: { session } } = await supabase.auth.getSession();
       
-      if (!session) {
-        toast({
-          title: "Потрібна авторизація",
-          description: "Будь ласка, увійдіть або зареєструйтесь",
-          variant: "destructive",
-        });
-        navigate("/auth?redirect=/nurse-application");
-        return;
-      }
+      if (session) {
+        setUser(session.user);
 
-      setUser(session.user);
+        // Check for existing application
+        const { data: existingApp, error } = await supabase
+          .from("nurse_applications")
+          .select("*")
+          .eq("user_id", session.user.id)
+          .maybeSingle();
 
-      // Check for existing application
-      const { data: existingApp, error } = await supabase
-        .from("nurse_applications")
-        .select("*")
-        .eq("user_id", session.user.id)
-        .maybeSingle();
+        if (error && error.code !== "PGRST116") {
+          console.error("Error loading application:", error);
+        }
 
-      if (error && error.code !== "PGRST116") {
-        console.error("Error loading application:", error);
-      }
-
-      if (existingApp) {
-        setApplicationData({
-          id: existingApp.id,
-          full_name: existingApp.full_name,
-          phone: existingApp.phone,
-          phone_verified: existingApp.phone_verified || false,
-          email: existingApp.email,
-          city: existingApp.city,
-          districts: existingApp.districts || [],
-          has_transport: existingApp.has_transport || false,
-          experience_years: existingApp.experience_years || 0,
-          specializations: existingApp.specializations || [],
-          night_shifts_available: existingApp.night_shifts_available || false,
-          diploma_url: existingApp.diploma_url,
-          medical_book_url: existingApp.medical_book_url,
-          passport_url: existingApp.passport_url,
-          photo_url: existingApp.photo_url,
-          current_step: existingApp.current_step || 1,
-          status: existingApp.status || "new",
-          test_score: existingApp.test_score,
-          test_passed: existingApp.test_passed,
-          interview_scheduled_at: existingApp.interview_scheduled_at,
-        });
-        setCurrentStep(existingApp.current_step || 1);
-      } else {
-        // Pre-fill email from auth
-        setApplicationData(prev => ({
-          ...prev,
-          email: session.user.email || "",
-        }));
+        if (existingApp) {
+          setApplicationData({
+            id: existingApp.id,
+            full_name: existingApp.full_name,
+            phone: existingApp.phone,
+            phone_verified: existingApp.phone_verified || false,
+            email: existingApp.email,
+            city: existingApp.city,
+            districts: existingApp.districts || [],
+            has_transport: existingApp.has_transport || false,
+            experience_years: existingApp.experience_years || 0,
+            specializations: existingApp.specializations || [],
+            night_shifts_available: existingApp.night_shifts_available || false,
+            diploma_url: existingApp.diploma_url,
+            medical_book_url: existingApp.medical_book_url,
+            passport_url: existingApp.passport_url,
+            photo_url: existingApp.photo_url,
+            current_step: existingApp.current_step || 1,
+            status: existingApp.status || "new",
+            test_score: existingApp.test_score,
+            test_passed: existingApp.test_passed,
+            interview_scheduled_at: existingApp.interview_scheduled_at,
+          });
+          setCurrentStep(existingApp.current_step || 1);
+        } else {
+          // Pre-fill email from auth
+          setApplicationData(prev => ({
+            ...prev,
+            email: session.user.email || "",
+          }));
+        }
       }
     } catch (error) {
       console.error("Auth error:", error);
@@ -130,6 +122,16 @@ const NurseApplication = () => {
   };
 
   const handleStepComplete = async (stepData: Partial<ApplicationData>, nextStep: number) => {
+    // Check if user is logged in before saving
+    if (!user) {
+      toast({
+        title: "Потрібна авторизація",
+        description: "Будь ласка, увійдіть або зареєструйтесь, щоб зберегти заявку",
+      });
+      navigate("/auth?redirect=/nurse-application");
+      return;
+    }
+
     const updatedData = { ...applicationData, ...stepData, current_step: nextStep };
     setApplicationData(updatedData);
 
