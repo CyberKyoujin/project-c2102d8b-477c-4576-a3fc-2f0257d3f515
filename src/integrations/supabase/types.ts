@@ -14,6 +14,181 @@ export type Database = {
   }
   public: {
     Tables: {
+      nurse_applications: {
+        Row: {
+          city: string
+          created_at: string | null
+          current_step: number | null
+          diploma_url: string | null
+          districts: string[] | null
+          documents_submitted_at: string | null
+          email: string
+          experience_years: number | null
+          full_name: string
+          has_transport: boolean | null
+          id: string
+          interview_notes: string | null
+          interview_scheduled_at: string | null
+          medical_book_url: string | null
+          night_shifts_available: boolean | null
+          passport_url: string | null
+          phone: string
+          phone_verified: boolean | null
+          photo_url: string | null
+          specializations:
+            | Database["public"]["Enums"]["nurse_specialization"][]
+            | null
+          status: Database["public"]["Enums"]["nurse_application_status"] | null
+          test_completed_at: string | null
+          test_passed: boolean | null
+          test_score: number | null
+          test_started_at: string | null
+          updated_at: string | null
+          user_id: string | null
+        }
+        Insert: {
+          city: string
+          created_at?: string | null
+          current_step?: number | null
+          diploma_url?: string | null
+          districts?: string[] | null
+          documents_submitted_at?: string | null
+          email: string
+          experience_years?: number | null
+          full_name: string
+          has_transport?: boolean | null
+          id?: string
+          interview_notes?: string | null
+          interview_scheduled_at?: string | null
+          medical_book_url?: string | null
+          night_shifts_available?: boolean | null
+          passport_url?: string | null
+          phone: string
+          phone_verified?: boolean | null
+          photo_url?: string | null
+          specializations?:
+            | Database["public"]["Enums"]["nurse_specialization"][]
+            | null
+          status?:
+            | Database["public"]["Enums"]["nurse_application_status"]
+            | null
+          test_completed_at?: string | null
+          test_passed?: boolean | null
+          test_score?: number | null
+          test_started_at?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Update: {
+          city?: string
+          created_at?: string | null
+          current_step?: number | null
+          diploma_url?: string | null
+          districts?: string[] | null
+          documents_submitted_at?: string | null
+          email?: string
+          experience_years?: number | null
+          full_name?: string
+          has_transport?: boolean | null
+          id?: string
+          interview_notes?: string | null
+          interview_scheduled_at?: string | null
+          medical_book_url?: string | null
+          night_shifts_available?: boolean | null
+          passport_url?: string | null
+          phone?: string
+          phone_verified?: boolean | null
+          photo_url?: string | null
+          specializations?:
+            | Database["public"]["Enums"]["nurse_specialization"][]
+            | null
+          status?:
+            | Database["public"]["Enums"]["nurse_application_status"]
+            | null
+          test_completed_at?: string | null
+          test_passed?: boolean | null
+          test_score?: number | null
+          test_started_at?: string | null
+          updated_at?: string | null
+          user_id?: string | null
+        }
+        Relationships: []
+      }
+      nurse_test_answers: {
+        Row: {
+          answered_at: string | null
+          application_id: string
+          id: string
+          is_correct: boolean
+          question_id: string
+          selected_answer: string
+        }
+        Insert: {
+          answered_at?: string | null
+          application_id: string
+          id?: string
+          is_correct: boolean
+          question_id: string
+          selected_answer: string
+        }
+        Update: {
+          answered_at?: string | null
+          application_id?: string
+          id?: string
+          is_correct?: boolean
+          question_id?: string
+          selected_answer?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "nurse_test_answers_application_id_fkey"
+            columns: ["application_id"]
+            isOneToOne: false
+            referencedRelation: "nurse_applications"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "nurse_test_answers_question_id_fkey"
+            columns: ["question_id"]
+            isOneToOne: false
+            referencedRelation: "nurse_test_questions"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      nurse_test_questions: {
+        Row: {
+          correct_answer: string
+          created_at: string | null
+          id: string
+          is_case_study: boolean | null
+          options: Json
+          order_index: number
+          question_text: string
+          question_type: string | null
+        }
+        Insert: {
+          correct_answer: string
+          created_at?: string | null
+          id?: string
+          is_case_study?: boolean | null
+          options: Json
+          order_index: number
+          question_text: string
+          question_type?: string | null
+        }
+        Update: {
+          correct_answer?: string
+          created_at?: string | null
+          id?: string
+          is_case_study?: boolean | null
+          options?: Json
+          order_index?: number
+          question_text?: string
+          question_type?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           id: string
@@ -47,6 +222,22 @@ export type Database = {
     }
     Enums: {
       app_role: "admin" | "moderator" | "user" | "nurse"
+      nurse_application_status:
+        | "new"
+        | "documents_verified"
+        | "test_passed"
+        | "interview"
+        | "activated"
+        | "rejected"
+      nurse_specialization:
+        | "injections"
+        | "ivs"
+        | "wound_care"
+        | "elderly_care"
+        | "pediatric"
+        | "postoperative"
+        | "palliative"
+        | "rehabilitation"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -175,6 +366,24 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["admin", "moderator", "user", "nurse"],
+      nurse_application_status: [
+        "new",
+        "documents_verified",
+        "test_passed",
+        "interview",
+        "activated",
+        "rejected",
+      ],
+      nurse_specialization: [
+        "injections",
+        "ivs",
+        "wound_care",
+        "elderly_care",
+        "pediatric",
+        "postoperative",
+        "palliative",
+        "rehabilitation",
+      ],
     },
   },
 } as const
