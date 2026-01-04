@@ -11,6 +11,7 @@ import ResetPassword from "./pages/ResetPassword";
 import Order from "./pages/Order";
 import Profile from "./pages/Profile";
 import OrderDetails from "./pages/OrderDetails";
+import NurseApplication from "./pages/NurseApplication";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -30,6 +31,7 @@ const App = () => (
           <Route path="/order" element={<Order />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/profile/order/:orderId" element={<OrderDetails />} />
+          <Route path="/nurse-application" element={<NurseApplication />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
